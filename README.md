@@ -74,8 +74,8 @@ The first time you lunch the app, it will take time since it is downloading JARs
 ## The NERDemo app
 
 The NERDemo app takes in input two parameters:
- - textfile -- a file containing many lines of text in english language;
- -  destdir -- the name of the output directory
+ - srcFile -- a file containing many lines of text in english language;
+ - destDir -- the name of the output directory
 
 The data folder contains a file, *data/document.txt*, which contains the following text:
 ```
