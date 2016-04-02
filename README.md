@@ -78,25 +78,24 @@ The result of the processing are written in CoNLL format in the file *output/doc
 could look something like this:
 
 ```
-Pierre       Pierre       NNP B-person
-Vinken       Vinken       NNP I-person
-,            ,            ,   O
-61           61           CD  O
-years        year         NNS O
-old          old          JJ  O
-,            ,            ,   O
-will         will         MD  O
-join         join         VB  O
-the          the          DT  O
-board        board        NN  O
-as           as           IN  O
-a            a            DT  O
-nonexecutive nonexecutive JJ  O
-director     director     NN  O
-Nov.         Nov.         NNP O
-29           29           CD  O
-.            .            .   O
-
+1       Pierre       Pierre       NNP B-person
+2       Vinken       Vinken       NNP I-person
+3       ,            ,            ,   O
+4       61           61           CD  O
+5       years        year         NNS O
+6       old          old          JJ  O
+7       ,            ,            ,   O
+8       will         will         MD  O
+9       join         join         VB  O
+10      the          the          DT  O
+11      board        board        NN  O
+12      as           as           IN  O
+13      a            a            DT  O
+14      nonexecutive nonexecutive JJ  O
+15      director     director     NN  O
+16      Nov.         Nov.         NNP O
+17      29           29           CD  O
+18      .            .            .   O
 ```
 
 ## Importing the project into Eclipse
