@@ -98,10 +98,14 @@ could look something like this:
 18      .            .            .   O
 ```
 
-The first column  contains the token position
-The second column conains the token text
-The third column contains the lemma for corresponding to a token
-The fourth column contains the part-of-speech tag assigned to a token 
+The first column  contains the token position.
+
+The second column contains the token text.
+
+The third column contains the lemma corresponding to a given token.
+
+The fourth column contains the part-of-speech tag assigned to a token.
+
 The fifth column contains the NE category/type in IOB format assigned to a token. 
 
 ## Importing the project into Eclipse
