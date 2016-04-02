@@ -1,10 +1,10 @@
-package it.unitn.ainlp;
+package it.unitn.ainlp.app;
 
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
-import it.unitn.ainlp.writer.MyWriter;
+import it.unitn.ainlp.writer.ConllWriter;
 
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -29,6 +29,7 @@ public class NERDemo
     	
     	Options opt = new Options();
     	
+    	// add help option
     	opt.addOption("h", false, "Print help for this application");
     	
     	BasicParser parser = new BasicParser();
@@ -42,43 +43,59 @@ public class NERDemo
     	}
     	
     	if (args.length != 2 || cl.hasOption('h')) {
+    		// print the help
     		HelpFormatter f = new HelpFormatter();
     		f.printHelp("NERDemo [option] text_file destDir", opt);
     		return;    		
     	}
     	
+    	// get input text file 
     	String textfile = args[0];
+    	
+    	// get output directory
     	String destDir = args[1];  
     	    	
     	runPipeline(
+    			/*
+    			 * Read an English text file. The name of the textfile to 
+    			 * read is stored in the textfile variable. 
+    			 */
     			createReaderDescription(TextReader.class,
     					TextReader.PARAM_SOURCE_LOCATION, textfile, 
     					TextReader.PARAM_LANGUAGE, "en"),
+    					
+    			/* 
+    			 * Perform tokenization and sentence boundary detection 
+    			 * using OpenNLP. 
+    			 */
     			createEngineDescription(OpenNlpSegmenter.class),
-    			createEngineDescription(OpenNlpPosTagger.class),
+    			
+    			/*
+    			 * Perform lemmatization using !LanguageTool. 
+    			 */
     	        createEngineDescription(LanguageToolLemmatizer.class),
     	        
-                // NamedEntity
+    	        /*
+    	         * Perform part-of-speech tagging using OpenNLP.
+    	         */
+    			createEngineDescription(OpenNlpPosTagger.class),
+    	        
+                /*
+                 * Perform named entity recognition using OpenNLP.
+                 */
                 createEngineDescription(OpenNlpNameFinder.class,
                         OpenNlpNameFinder.PARAM_VARIANT, "person"),
                 createEngineDescription(OpenNlpNameFinder.class,
                         OpenNlpNameFinder.PARAM_VARIANT, "organization"),
                 createEngineDescription(OpenNlpNameFinder.class, 
                 		OpenNlpNameFinder.PARAM_VARIANT, "location"),
-    			//createEngineDescription(OpenNlpNameFinder.class),
-    	        //createEngineDescription(StanfordNamedEntityRecognizer.class,
-				//		StanfordNamedEntityRecognizer.PARAM_LANGUAGE, "en",
-				//		StanfordNamedEntityRecognizer.PARAM_VARIANT, "muc.7class.distsim.crf"));
     	        
-    	        // writer
-                createEngineDescription(MyWriter.class,
-                		MyWriter.PARAM_TARGET_LOCATION, destDir));
-                        
-                //createEngineDescription(Conll2002Writer.class, 
-                //		Conll2002Writer.PARAM_TARGET_LOCATION, destDir));
-            	        
-    			//createEngineDescription(Conll2006Writer.class, 
-    			//		Conll2006Writer.PARAM_TARGET_LOCATION, destDir));
-    	        //createEngineDescription)
+    	        /*
+    	         * Write the result to disk in CoNLL format. The results are
+    	         * written to a file called document.txt.conll, which is
+    	         *  located in the destDir directory.
+    	         */
+                createEngineDescription(ConllWriter.class,
+                		ConllWriter.PARAM_TARGET_LOCATION, destDir));
     }
 }

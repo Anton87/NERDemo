@@ -2,6 +2,9 @@
  * Copyright 2016
  * iKernels group
  * University of Trento
+ * 
+ * Based on the Conll2002Writer.java code
+ * @see of https://github.com/dkpro/dkpro-core/blob/master/dkpro-core-io-conll-asl/src/main/java/de/tudarmstadt/ukp/dkpro/core/io/conll/Conll2002Writer.java
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,6 +41,7 @@ import org.apache.uima.jcas.JCas;
 import de.tudarmstadt.ukp.dkpro.core.api.io.IobEncoder;
 import de.tudarmstadt.ukp.dkpro.core.api.io.JCasFileWriter_ImplBase;
 import de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity;
+import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma;
 //import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
@@ -45,37 +49,34 @@ import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
 
 
 /**
- * <p>Writes the CoNLL 2002 named entity format. The columns are separated by a single space, unlike
+ * <p>Writes results in the format below. The columns are separated by a single space, unlike
  * illustrated below.</p>
  * 
  * <pre><code>
- * Wolff      B-PER
- * ,          O
- * currently  O
- * a          O
- * journalist O
- * in         O
- * Argentina  B-LOC
- * ,          O
- * played     O
- * with       O
- * Del        B-PER
- * Bosque     I-PER
- * in         O
- * the        O
- * final      O
- * years      O
- * of         O
- * the        O
- * seventies  O
- * in         O
- * Real       B-ORG
- * Madrid     I-ORG
- * .          O
+ * Pierre       Pierre NNP B-person
+ * Vinken       Vinken NNP I-person
+ * ,            ,      ,   O
+ * 61           61     CD  O
+ * years        year   NNS O
+ * old          old    JJ  O
+ * ,            ,      ,   O
+ * will         will   MD  O
+ * join         join   VB  O
+ * the          the    DT  O
+ * board        board  NN  O
+ * as           as     IN  O
+ * a            a      DT  O
+ * nonexecutive nonexecutive JJ  O
+ * director     director     NN  O
+ * Nov.         Nov.         NNP O
+ * 29           29           CD  O
+ * .            .            .   O
+
  * </code></pre>
  * 
  * <ol>
  * <li>FORM - token</li>
+ * <li>POS - pos</li>
  * <li>NER - named entity (BIO encoded)</li>
  * </ol>
  * 
@@ -87,7 +88,7 @@ import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
         "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
         "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token",
         "de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity"})
-public class MyWriter
+public class ConllWriter
     extends JCasFileWriter_ImplBase
 {
     private static final String UNUSED = "_";
@@ -146,6 +147,7 @@ public class MyWriter
                 Row row = new Row();
                 row.id = i+1;
                 row.token = tokens.get(i);
+                row.lemma = tokens.get(i).getLemma();
                 row.ne = encoder.encode(tokens.get(i));
                 row.pos = poss.get(i);
                 ctokens.put(row.token, row);
@@ -158,7 +160,7 @@ public class MyWriter
                     chunk = encoder.encode(row.token);
                 }
                 
-                aOut.printf("%s %s %s\n", row.token.getCoveredText(), row.pos.getPosValue(), chunk);
+                aOut.printf("%s %s %s %s\n", row.token.getCoveredText(), row.lemma.getValue(), row.pos.getPosValue(), chunk);
             }
 
             aOut.println();
@@ -172,5 +174,6 @@ public class MyWriter
         String ne;
         // inserted by me
         POS pos;
+        Lemma lemma;
     }
 }
