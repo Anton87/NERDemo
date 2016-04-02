@@ -69,5 +69,9 @@ The first time you lunch the app, it will take time since it is downloading JARs
 
 ## The NER demo
 
-The NERDemo app takes in input an English text file containing many lines and performs sentenc boundary detecting,
- lemmatization, part-of-speech (pos) tagging and named entity recognition.
+The NERDemo app takes in input two parameters:
+ - a file containing many lines of text in english language;
+ - the name of the dest directory (say output)
+
+and performs sentenc boundary detection, lemmatization, part-of-speech (pos) tagging and named entity recognition.
+The result of the processing are written in CoNLL format in the file *output/document.txt.conll*
