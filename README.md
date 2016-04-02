@@ -123,7 +123,7 @@ The fifth column contains the NE category/type in [IOB](https://en.wikipedia.org
 
 
 ## Code Walk-through
-```
+```java
 package it.unitn.ainlp.app;
 
 
