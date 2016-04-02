@@ -70,8 +70,8 @@ The first time you lunch the app, it will take time since it is downloading JARs
 ## The NER demo
 
 The NERDemo app takes in input two parameters:
- - a file containing many lines of text in english language;
- - the name of the dest directory (say output)
+ - textfile -- a file containing many lines of text in english language;
+ -  destdir -- the name of the output directory
 
 and performs sentence boundary detection, lemmatization, part-of-speech (pos) tagging and entity recognition.
 The result of the processing are written in CoNLL format in the file *output/document.txt.conll* and 
