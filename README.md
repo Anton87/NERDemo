@@ -128,6 +128,17 @@ The fifth column contains the NE category/type in [IOB](https://en.wikipedia.org
 
 ## Code Walk-through
 
+The NERDemo app performs the following steps:
+
+- Read English text from the file passed as input
+- Perform sentence boundary detection and tokenization
+  using OpenNLP
+- Perform lemmatization using !LanguageTool
+- Perform Named Entity Recognition using OpenNLP
+  - include model for recognizing person, organization and location
+    names
+- Write the resuls to disk in CoNLL format
+
 
 ```java
 package it.unitn.ainlp.app;
