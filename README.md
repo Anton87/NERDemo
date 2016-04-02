@@ -57,7 +57,7 @@ $> mvn -DskipTests dependency:copy-dependencies package
 
 This takes the compiled code and package it in its distributable format, such as a JAR.
 
-## Running the NER demo
+## Running the NERDemo app
 
 ```
 $> ./NERDemo.sh <src file> <dest dir>
@@ -67,7 +67,7 @@ Look into the NERDemo.sh script ot figure out what is happening.
 
 The first time you lunch the app, it will take time since it is downloading JARs and model files.
 
-## The NER demo
+## The NERDemo app
 
 The NERDemo app takes in input two parameters:
  - textfile -- a file containing many lines of text in english language;
