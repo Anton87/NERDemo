@@ -73,5 +73,26 @@ The NERDemo app takes in input two parameters:
  - a file containing many lines of text in english language;
  - the name of the dest directory (say output)
 
-and performs sentenc boundary detection, lemmatization, part-of-speech (pos) tagging and named entity recognition.
+and performs sentence boundary detection, lemmatization, part-of-speech (pos) tagging and entity recognition.
 The result of the processing are written in CoNLL format in the file *output/document.txt.conll*
+
+## Import into e
+
+### Maven
+
+If you use Eclipse please install the M2E plugin. Go to Help > Install new software... and search
+for m2e.  
+
+### UIMA tooling for Eclipse
+
+UIMA tooling simplifies the development of typesystems and annotators in Eclipse. Install Eclipse EMF
+following these instructions: http://tinyurl.com/UIMA4ECLIPSE. The useful UIMA visual
+tools (UIMA tooling) can be found at this software update address:
+http://www.apache.org/dist/uima/eclipse-update-site/.
+
+### Importing the project into Eclipse
+
+- Open Eclipse
+- Click on File -> Import -> Maven -> Existing Maven Projects 
+- Select the NERDemo project folder and click on Finish
+
