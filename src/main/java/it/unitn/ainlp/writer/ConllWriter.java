@@ -160,7 +160,7 @@ public class ConllWriter
                     chunk = encoder.encode(row.token);
                 }
                 
-                aOut.printf("%s %s %s %s\n", row.token.getCoveredText(), row.lemma.getValue(), row.pos.getPosValue(), chunk);
+                aOut.printf("%d %s %s %s %s\n", row.id, row.token.getCoveredText(), row.lemma.getValue(), row.pos.getPosValue(), chunk);
             }
 
             aOut.println();
