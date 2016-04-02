@@ -142,54 +142,52 @@ public class NERDemo
     public static void main( String[] args ) throws Exception {
 
 
-    	// get input text file 
-    	String textfile = args[0];
+        // get input text file 
+        String textfile = args[0];
     	
-    	// get output directory
-    	String destDir = args[1];  
+        // get output directory
+        String destDir = args[1];  
     	    	
-    	runPipeline(
-    		/*
-    		 * Read an English text file. The name of the textfile to 
-    		 * read is stored in the textfile variable. 
-    		 */
-    		createReaderDescription(TextReader.class,
-    			TextReader.PARAM_SOURCE_LOCATION, textfile, 
-    			TextReader.PARAM_LANGUAGE, "en"),
+        runPipeline(
+                /*
+                 * Read text from file data/document.txt
+                 */
+                createReaderDescription(TextReader.class,
+                        TextReader.PARAM_SOURCE_LOCATION, textfile, 
+                        TextReader.PARAM_LANGUAGE, "en"),
     					
-    		/* 
-    		 * Perform tokenization and sentence boundary detection 
-    		 * using OpenNLP. 
-    		 */
-    		createEngineDescription(OpenNlpSegmenter.class),
+                /* 
+                 * Perform tokenization and sentence boundary detection 
+                 * using OpenNLP. 
+                 */
+                createEngineDescription(OpenNlpSegmenter.class),
     			
-    		/*
-    		 * Perform lemmatization using !LanguageTool. 
-    		 */
-    	       	createEngineDescription(LanguageToolLemmatizer.class),
-    	        
-	        /*
-    	         * Perform part-of-speech tagging using OpenNLP.
-    	       	 */
-    		createEngineDescription(OpenNlpPosTagger.class),
+                /*
+                 * Perform lemmatization using !LanguageTool. 
+                 */
+                createEngineDescription(LanguageToolLemmatizer.class),
+    	       
+                /*
+                 * Perform part-of-speech tagging using OpenNLP.
+                 */
+                createEngineDescription(OpenNlpPosTagger.class),
     	        
                 /*
-               	 * Perform named entity recognition using OpenNLP.
-       	         */
+                 * Perform named entity recognition using OpenNLP.
+                 */
                 createEngineDescription(OpenNlpNameFinder.class,
-       	                OpenNlpNameFinder.PARAM_VARIANT, "person"),
-               	createEngineDescription(OpenNlpNameFinder.class,
-                       	OpenNlpNameFinder.PARAM_VARIANT, "organization"),
+                        OpenNlpNameFinder.PARAM_VARIANT, "person"), 
+                createEngineDescription(OpenNlpNameFinder.class,
+                        OpenNlpNameFinder.PARAM_VARIANT, "organization"),
                 createEngineDescription(OpenNlpNameFinder.class, 
-       	       		OpenNlpNameFinder.PARAM_VARIANT, "location"),
+                        OpenNlpNameFinder.PARAM_VARIANT, "location"),
     	        
-   	        /*
-	         * Write the result to disk in CoNLL format. The results are
-    	         * written to a file called document.txt.conll, which is
-    	       	 *  located in the destDir directory.
-	 	 */
-        	 createEngineDescription(ConllWriter.class,
-                	ConllWriter.PARAM_TARGET_LOCATION, destDir));
+                /*
+                 * Write the result to disk in CoNLL format. The results are
+                 * written to the file output/document.txt.conll 
+                 */
+                 createEngineDescription(ConllWriter.class,
+                        ConllWriter.PARAM_TARGET_LOCATION, destDir));
      }
 }
 ```
