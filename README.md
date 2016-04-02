@@ -86,7 +86,7 @@ $> ./NERDemo.sh data/document.txt output
 ```
 
 The app performs sentence boundary detection, lemmatization, part-of-speech (pos) tagging and 
-recognition of entities appearing withing the text.
+recognition of entities appearing within the text.
 The result of the processing are written in CoNLL format in the file *output/document.txt.conll* and 
 could look something like this:
 
