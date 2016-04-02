@@ -135,9 +135,9 @@ The NERDemo app performs the following steps:
   using OpenNLP
 - Perform lemmatization using !LanguageTool
 - Perform Named Entity Recognition using OpenNLP
-  - include model for recognizing person, organization and location
+  - include models for recognizing person, organization and location
     names
-- Write the resuls to disk in CoNLL format
+- Write the results to disk in CoNLL format
 
 
 ```java
@@ -224,3 +224,5 @@ for m2e.
 - Click on File -> Import -> Maven -> Existing Maven Projects 
 - Select the NERDemo project folder and click on Finish
 
+
+This tutorial was partly  based on a similar dkpro tutorial located at: [https://dkpro.github.io/dkpro-core/pages/java-intro/](https://dkpro.github.io/dkpro-core/pages/java-intro/)
