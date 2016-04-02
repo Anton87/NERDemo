@@ -4,6 +4,10 @@ This is a simple demo showing how to perform simple IR tasks such as Named Entit
 
 ## Prerequisites
 
+### JDK
+
+Download and install the Java SE Development Kit 7 from the Oracle Java Site
+
 ### UIMA
 
 Go to https://uima.apache.org/downloads.cgi and download the latest binary distribution of UIMA.  
@@ -123,6 +127,8 @@ The fifth column contains the NE category/type in [IOB](https://en.wikipedia.org
 
 
 ## Code Walk-through
+
+
 ```java
 package it.unitn.ainlp.app;
 
@@ -143,17 +149,17 @@ public class NERDemo
 
 
         // get input text file 
-        String textfile = args[0];
+        String inputFile = args[0];
     	
         // get output directory
-        String destDir = args[1];  
+        String outputDir = args[1];  
     	    	
         runPipeline(
                 /*
-                 * Read text from file data/document.txt
+                 * Read text from file passed in input.
                  */
                 createReaderDescription(TextReader.class,
-                        TextReader.PARAM_SOURCE_LOCATION, textfile, 
+                        TextReader.PARAM_SOURCE_LOCATION, inputFile, 
                         TextReader.PARAM_LANGUAGE, "en"),
     					
                 /* 
@@ -184,10 +190,10 @@ public class NERDemo
     	        
                 /*
                  * Write the result to disk in CoNLL format. The results are
-                 * written to the file output/document.txt.conll 
+                 * written in the output directory passed in input
                  */
                  createEngineDescription(ConllWriter.class,
-                        ConllWriter.PARAM_TARGET_LOCATION, destDir));
+                        ConllWriter.PARAM_TARGET_LOCATION, outputDir));
      }
 }
 ```

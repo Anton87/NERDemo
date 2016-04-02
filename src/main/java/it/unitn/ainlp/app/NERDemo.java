@@ -1,26 +1,20 @@
 package it.unitn.ainlp.app;
 
-
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
 import it.unitn.ainlp.writer.ConllWriter;
-
-import org.apache.commons.cli.BasicParser;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-
-//import de.tudarmstadt.ukp.dkpro.core.io.conll.Conll2
+import org.apache.commons.cli.*;
 import de.tudarmstadt.ukp.dkpro.core.io.text.TextReader;
 import de.tudarmstadt.ukp.dkpro.core.languagetool.LanguageToolLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpNameFinder;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpSegmenter;
-//import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
 
 /**
- * Hello world!
+ * A simple demo showing how to perform simple information extraction (IE)
+ * tasks, such as Named Entity Recognition (NER), by using the UIMA SDK and 
+ * DKPro.
  *
  */
 public class NERDemo 
@@ -50,18 +44,17 @@ public class NERDemo
     	}
     	
     	// get input text file 
-    	String textfile = args[0];
+    	String inputFile = args[0];
     	
     	// get output directory
-    	String destDir = args[1];  
+    	String outputDir = args[1];  
     	    	
     	runPipeline(
     			/*
-    			 * Read an English text file. The name of the textfile to 
-    			 * read is stored in the textfile variable. 
+    			 * Read text from file passed in input 
     			 */
     			createReaderDescription(TextReader.class,
-    					TextReader.PARAM_SOURCE_LOCATION, textfile, 
+    					TextReader.PARAM_SOURCE_LOCATION, inputFile, 
     					TextReader.PARAM_LANGUAGE, "en"),
     					
     			/* 
@@ -90,12 +83,11 @@ public class NERDemo
                 createEngineDescription(OpenNlpNameFinder.class, 
                 		OpenNlpNameFinder.PARAM_VARIANT, "location"),
     	        
-    	        /*
-    	         * Write the result to disk in CoNLL format. The results are
-    	         * written to a file called document.txt.conll, which is
-    	         *  located in the destDir directory.
-    	         */
+                /*
+                 * Write the result to disk in CoNLL format. The results are
+                 * written to the directory stored in the outDir param
+                */
                 createEngineDescription(ConllWriter.class,
-                		ConllWriter.PARAM_TARGET_LOCATION, destDir));
+                		ConllWriter.PARAM_TARGET_LOCATION, outputDir));
     }
 }
