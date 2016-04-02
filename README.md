@@ -77,13 +77,27 @@ and performs sentence boundary detection, lemmatization, part-of-speech (pos) ta
 The result of the processing are written in CoNLL format in the file *output/document.txt.conll* and 
 could look something like this:
 
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+```
+Pierre       Pierre       NNP B-person
+Vinken       Vinken       NNP I-person
+,            ,            ,   O
+61           61           CD  O
+years        year         NNS O
+old          old          JJ  O
+,            ,            ,   O
+will         will         MD  O
+join         join         VB  O
+the          the          DT  O
+board        board        NN  O
+as           as           IN  O
+a            a            DT  O
+nonexecutive nonexecutive JJ  O
+director     director     NN  O
+Nov.         Nov.         NNP O
+29           29           CD  O
+.            .            .   O
 
-
+```
 
 ## Importing the project into Eclipse
 
