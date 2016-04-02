@@ -60,7 +60,7 @@ This takes the compiled code and package it in its distributable format, such as
 ## Running the NER demo
 
 ```
-$> ./NERDemo.sh data/document.txt output
+$> ./NERDemo.sh <src file> <dest dir>
 ```
 
 Look into the NERDemo.sh script ot figure out what is happening.
@@ -73,7 +73,20 @@ The NERDemo app takes in input two parameters:
  - textfile -- a file containing many lines of text in english language;
  -  destdir -- the name of the output directory
 
-and performs sentence boundary detection, lemmatization, part-of-speech (pos) tagging and entity recognition.
+The data folder contains a file, *data/document.txt*, which contains the following text:
+```
+Pierre Vinken, 61 years old, will join the board as a nonexecutive director Nov. 29.
+...
+
+```
+
+To lunch the app, type:
+```
+$> ./NERDemo.sh data/document.txt output
+```
+
+The app performs sentence boundary detection, lemmatization, part-of-speech (pos) tagging and 
+recognition of entities appearing withing the text.
 The result of the processing are written in CoNLL format in the file *output/document.txt.conll* and 
 could look something like this:
 
@@ -106,7 +119,7 @@ The third column contains the lemma corresponding to a given token.
 
 The fourth column contains the part-of-speech tag assigned to a token.
 
-The fifth column contains the NE category/type in IOB format assigned to a token. 
+The fifth column contains the NE category/type in [IOB](https://en.wikipedia.org/wiki/Inside_Outside_Beginning) format assigned to a token. 
 
 ## Importing the project into Eclipse
 
