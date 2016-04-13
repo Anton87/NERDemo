@@ -74,7 +74,7 @@ The first time you lunch the app, it will take time since it is downloading JARs
 ## The NERDemo app
 
 The NERDemo app takes in input two parameters:
- - srcFile -- a file containing many lines of text in english language;
+ - srcFile -- a file containing many lines of text in English language;
  - destDir -- the name of the output directory
 
 The data folder contains a file, *data/document.txt*, which contains the following text:
@@ -91,14 +91,14 @@ $> ./NERDemo.sh data/document.txt output
 
 The app performs sentence boundary detection, lemmatization, part-of-speech (pos) tagging and 
 recognition of entities appearing within the text.
-The result of the processing are written` in CoNLL format in the file *output/document.txt.conll*.
+The result of the processing are written` in CONLL format in the file *output/document.txt.conll*.
 
 To check the result, type:
 ```
 $> less output/document.txt.conll
 ```
  
-The ouptut file should look something like this:
+The output file should look something like this:
 
 ```
 1       Pierre       Pierre       NNP B-person
@@ -143,7 +143,7 @@ The NERDemo app performs the following steps:
 - Perform Named Entity Recognition using OpenNLP
   - include models for recognizing person, organization and location
     names
-- Write the results to disk in CoNLL format
+- Write the results to disk in CONLL format
 
 
 ```java
@@ -196,7 +196,7 @@ public class NERDemo
                         OpenNlpNameFinder.PARAM_VARIANT, "location"),
     	        
                 /*
-                 * Write the result to disk in CoNLL format. The results are
+                 * Write the result to disk in CONLL format. The results are
                  * written in the output directory passed in input
                  */
                  createEngineDescription(ConllWriter.class,
@@ -215,7 +215,7 @@ A Row object contains the following information about a token:
 
 1. the token id/position in a sentence
 2. the token itself
-3. the lemma corrisponding to the token
+3. the lemma corresponding to the token
 4. the part-of-speech tag assigned to the token
 5. the named-entity category label in IOB format assigned to a token
 
