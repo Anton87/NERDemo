@@ -147,6 +147,7 @@ The NERDemo app performs the following steps:
 
 
 ```java
+// NERDemo app
 package it.unitn.ainlp.app;
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
@@ -170,7 +171,8 @@ public class NERDemo
     	
         // get output directory
         String outputDir = args[1];  
-    	    	
+    	
+        // Run a sequence of analysis engines on a text document    	
         runPipeline(
                 /*
                  * Read text from file passed in input.

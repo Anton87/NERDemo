@@ -49,6 +49,7 @@ public class NERDemo
     	// get output directory
     	String outputDir = args[1];  
     	    	
+    	// run a sequence of analysis engines on a text file
     	runPipeline(
     			/*
     			 * Read text from file passed in input 
