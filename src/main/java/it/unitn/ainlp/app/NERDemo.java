@@ -54,9 +54,9 @@ public class NERDemo
     			/*
     			 * Read text from file passed in input 
     			 */
-    			createReaderDescription(TextReader.class,
-    					TextReader.PARAM_SOURCE_LOCATION, inputFile, 
-    					TextReader.PARAM_LANGUAGE, "en"),
+    		    createReaderDescription(TextReader.class,
+                    TextReader.PARAM_SOURCE_LOCATION, inputFile, 
+    	            TextReader.PARAM_LANGUAGE, "en"),
     					
     			/* 
     			 * Perform tokenization and sentence boundary detection 
