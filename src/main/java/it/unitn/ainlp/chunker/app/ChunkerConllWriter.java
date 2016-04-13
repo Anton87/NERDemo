@@ -184,7 +184,7 @@ public class ChunkerConllWriter
                 ctokens.put(row.token, row);
             }
             
-            // Write sentence in conll format
+            // Write sentence in CONLL format
             for (Row row : ctokens.values()) {
             	/**
             	 * Add the code for printing chunks.

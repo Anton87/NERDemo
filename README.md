@@ -221,7 +221,7 @@ The ConllWriter writes annotations from the CAS object to a file.
 
 To do so, first, it retrieves the list of sentences from the CAS passed in input to the `convert()` method.
 
-Then, for each sentence, it stores in the `ctokens` map the information about the tokens appering in the sentence. Information about a single token is stored in a Row object.
+Then, for each sentence, it stores in the `ctokens` map the information about the tokens appearing in the sentence. Information about a single token is stored in a *Row* object.
 
 A Row object contains the following information about a token:
 
@@ -231,7 +231,7 @@ A Row object contains the following information about a token:
 4. the part-of-speech tag assigned to the token
 5. the named-entity category label in IOB format assigned to a token
 
-At the end, the ConllWriter writes information about the tokens appearing in the sentence to tha file.
+At the end, the ConllWriter writes information about the tokens appearing in the sentence to a file.
 
 
 ```java
@@ -279,7 +279,13 @@ private void convert(JCas aJCas, PrintWriter aOut) {
            // Add token information to the ctokens map
            ctokens.put(row.token, row);
        }
-       ...
+      
+       // Write sentence in CONLL format 
+       for (Row row : ctokens.values()) {                
+           aOut.printf("%d %s %s %s %s\n", row.id, row.token.getCoveredText(), row.lemma.getValue(), row.pos.getPosValue(), row.ne);
+       }
+
+            aOut.println();
    }
 }
 

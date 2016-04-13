@@ -54,19 +54,19 @@ import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
  * single space, unlike illustrated below.</p>
  * 
  * <pre><code>
- * 1	Pierre       Pierre NNP B-person
- * 2	Vinken       Vinken NNP I-person
- * 3	,            ,      ,   O
- * 4	61           61     CD  O
- * 5	years        year   NNS O
- * 6	old          old    JJ  O
- * 7	,            ,      ,   O
- * 8	will         will   MD  O
- * 9	join         join   VB  O
- * 10	the          the    DT  O
- * 11	board        board  NN  O
- * 12	as           as     IN  O
- * 13	a            a      DT  O
+ * 1	Pierre       Pierre       NNP B-person
+ * 2	Vinken       Vinken       NNP I-person
+ * 3	,            ,            ,   O
+ * 4	61           61           CD  O  
+ * 5	years        year         NNS O
+ * 6	old          old          JJ  O
+ * 7	,            ,            ,   O
+ * 8	will         will         MD  O
+ * 9	join         join         VB  O
+ * 10	the          the          DT  O
+ * 11	board        board        NN  O
+ * 12	as           as           IN  O
+ * 13	a            a            DT  O
  * 14	nonexecutive nonexecutive JJ  O
  * 15	director     director     NN  O
  * 16	Nov.         Nov.         NNP O
@@ -162,7 +162,7 @@ public class ConllWriter
                 ctokens.put(row.token, row);
             }
             
-            // Write sentence in CONLL 2006 format
+            // Write sentence in CONLL format
             for (Row row : ctokens.values()) {                
                 aOut.printf("%d %s %s %s %s\n", row.id, row.token.getCoveredText(), row.lemma.getValue(), row.pos.getPosValue(), row.ne);
             }
