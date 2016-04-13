@@ -219,56 +219,67 @@ public class NERDemo
 
 The ConllWriter writes annotations from the CAS object to a file.
 
-To do so, first, it retrieves the list of sentence (annotations) obtained by using the OpenNlpSegmenter annotator.
+To do so, first, it retrieves the list of sentences from the CAS passed in input to the `convert` method.
 
-Then, it iterates over all the sentences collected and for each of them it retrieves:
- 1. the list of tokens
- 2. part-of-speech tags
- 3. lemmas
- 4. named-entities
+Then, for each sentence, it stores in the `ctokens` map the information about the tokens appering in the sentence. Information about a single token is stored in a Row object.
+
+A Row object contains the following information about a token:
+1. the token position in a sentence (id)
+2. the token itself
+3. the lemma corrisponding to a token
+4. the part-of-speech tag assigned to a token
+5. the named-entity category label in IOB format assigned to a token
+
+At the end, the ConllWriter write information about the tokens appearing in the sentence
+
 appearing in the sentence.
 
-The list of annotations referring to each single token is saved into the map ctokens.
+The list of annotations is goruped by tokens and referring to each single token is saved into the map ctokens.
 
 ```java
 
-	// Sentences
-	Collection<Sentence> sentences = select(aJCas, Sentence.class);
-       
-        //For each sentence... 
-        for (Sentence sentence : sentences) {
-        	
-            // Store the information about the sentence tokens in the ctokens map.
-            // How? ctokens maps each token a Row object, which contains  
-            // the token id, lemma, etc...
-            HashMap<Token, Row> ctokens = new LinkedHashMap<Token, Row>();
+private void convert(JCas aJCas, PrintWriter aOut) {
 
-            // Tokens
-            List<Token> tokens = selectCovered(Token.class, sentence);
+   // Sentences
+   Collection<Sentence> sentences = select(aJCas, Sentence.class);
+       
+   // For each sentence... 
+   for (Sentence sentence : sentences) {
+        	
+       // Store the information about the sentence tokens in the ctokens map.
+       // How? ctokens maps each token a Row object, which contains  
+       // the token id, lemma, etc...
+       HashMap<Token, Row> ctokens = new LinkedHashMap<Token, Row>();
+
+       // Tokens
+       List<Token> tokens = selectCovered(Token.class, sentence);
             
-            // Poss
-            List<POS> poss = selectCovered(POS.class, sentence);
+       // Poss
+       List<POS> poss = selectCovered(POS.class, sentence);
             
-            // used to convert named-entities to IOB format
-            IobEncoder encoder = new IobEncoder(aJCas.getCas(), neType, neValue);
+       // used to convert named-entities to IOB format
+       IobEncoder encoder = new IobEncoder(aJCas.getCas(), neType, neValue);
             
-            for (int i = 0; i < tokens.size(); i++) {
-                // create a new Row object and store annotations for
-                // token<sub>i</sub>.
+       for (int i = 0; i < tokens.size(); i++) {
+           // create a new Row object and store annotations for
+           // token at position $i
                    
-                Row row = new Row();
-                row.id = i+1;
-                row.token = tokens.get(i);
+           Row row = new Row();
+           row.id = i+1;
+           row.token = tokens.get(i);
                 
-                // Lemma
-                row.lemma = tokens.get(i).getLemma();
+           // Lemma
+           row.lemma = tokens.get(i).getLemma();
                 
-                // Named-entity chunks in IOB format
-                row.ne = encoder.encode(tokens.get(i));
-                row.pos = poss.get(i);
-                ctokens.put(row.token, row);
-            }
-     ...
+           // Named-entity chunks in IOB format
+           row.ne = encoder.encode(tokens.get(i));
+           row.pos = poss.get(i);
+
+           // Add token information to the ctokens map
+           ctokens.put(row.token, row);
+       }
+       ...
+   }
 }
 
 ```
