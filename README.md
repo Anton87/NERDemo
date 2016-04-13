@@ -284,8 +284,7 @@ private void convert(JCas aJCas, PrintWriter aOut) {
        for (Row row : ctokens.values()) {                
            aOut.printf("%d %s %s %s %s\n", row.id, row.token.getCoveredText(), row.lemma.getValue(), row.pos.getPosValue(), row.ne);
        }
-
-            aOut.println();
+       aOut.println();
    }
 }
 
