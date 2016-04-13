@@ -215,6 +215,7 @@ public class NERDemo
                         ConllWriter.PARAM_TARGET_LOCATION, outputDir));
      }
 }
+```
 
 The ConllWriter writes annotations from the CAS object to a file.
 
