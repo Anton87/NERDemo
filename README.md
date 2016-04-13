@@ -215,6 +215,58 @@ public class NERDemo
                         ConllWriter.PARAM_TARGET_LOCATION, outputDir));
      }
 }
+
+The ConllWriter writes annotations from the CAS object to a file.
+
+To do so, first, it retrieves the list of sentence (annotations) obtained by using the OpenNlpSegmenter annotator.
+
+Then, it iterates over all the sentences collected and for each sentence it retrieves:
+ 1. the list of tokens
+ 2. part-of-speech tags
+ 3. lemmas
+ 4. and named-entities
+
+
+The list of annotations referring to each single token is saved into the map ctokens.
+
+```java
+
+	// Sentences
+	Collection<Sentence> sentences = select(aJCas, Sentence.class);
+       
+        //For each sentence... 
+        for (Sentence sentence : sentences) {
+        	
+            // Store the information about the sentence tokens in the ctokens map.
+            // How? ctokens maps each token a Row object, which contains  
+            // the token id, lemma, etc...
+            HashMap<Token, Row> ctokens = new LinkedHashMap<Token, Row>();
+
+            // Tokens
+            List<Token> tokens = selectCovered(Token.class, sentence);
+            
+            // Poss
+            List<POS> poss = selectCovered(POS.class, sentence);
+            
+            // Convert Named-entities to IOB format
+            IobEncoder encoder = new IobEncoder(aJCas.getCas(), neType, neValue);
+            
+            for (int i = 0; i < tokens.size(); i++) {
+                Row row = new Row();
+                row.id = i+1;
+                row.token = tokens.get(i);
+                
+                // Lemma
+                row.lemma = tokens.get(i).getLemma();
+                
+                // Named-entity chunks in IOB format
+                row.ne = encoder.encode(tokens.get(i));
+                row.pos = poss.get(i);
+                ctokens.put(row.token, row);
+            }
+     ...
+}
+
 ```
  
 
