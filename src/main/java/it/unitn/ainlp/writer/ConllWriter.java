@@ -147,7 +147,7 @@ public class ConllWriter
             IobEncoder encoder = new IobEncoder(aJCas.getCas(), neType, neValue);
             
             for (int i = 0; i < tokens.size(); i++) {
-                Row row = new Row();
+            	Row row = new Row();
                 row.id = i+1;
                 row.token = tokens.get(i);
                 
