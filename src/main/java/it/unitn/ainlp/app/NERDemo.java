@@ -62,7 +62,7 @@ public class NERDemo
     			 * Perform tokenization and sentence boundary detection 
     			 * using OpenNLP. 
     			 */
-    			createEngineDescription(OpenNlpSegmenter.class),
+    	        createEngineDescription(OpenNlpSegmenter.class),
     			
     			/*
     			 * Perform lemmatization using !LanguageTool. 
@@ -72,7 +72,7 @@ public class NERDemo
     	        /*
     	         * Perform part-of-speech tagging using OpenNLP.
     	         */
-    			createEngineDescription(OpenNlpPosTagger.class),
+    		    createEngineDescription(OpenNlpPosTagger.class),
     	        
                 /*
                  * Perform named entity recognition using OpenNLP.
