@@ -177,7 +177,7 @@ public class ConllWriter
         }
     }
 
-    
+    /** Store information about each token. */
     private static final class Row
     {
     	int id; 			
