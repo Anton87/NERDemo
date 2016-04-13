@@ -6,7 +6,7 @@ This is a simple demo showing how to perform simple IR tasks such as Named Entit
 
 ### JDK 7+
 
-Download and install the Java SE Development Kit 7 from the Oracle Java Site.
+Download and install the Java SE Development Kit 7 or higher from the Oracle Java Site.
 
 ### UIMA
 
@@ -225,55 +225,58 @@ At the end, the ConllWriter writes information about the tokens appearing in the
 ```java
 // ConllWriter
 
-...
+public class ConllWriter extends JCasFileWriter_ImplBase {
 
-private void convert(JCas aJCas, PrintWriter aOut) {
+    ...
 
-   // Sentences
-   Collection<Sentence> sentences = select(aJCas, Sentence.class);
+    private void convert(JCas aJCas, PrintWriter aOut) {
+
+        // Sentences
+        Collection<Sentence> sentences = select(aJCas, Sentence.class);
        
-   // For each sentence... 
-   for (Sentence sentence : sentences) {
+        // For each sentence... 
+        for (Sentence sentence : sentences) {
         	
-       // Store the information about the sentence tokens in the ctokens map.
-       // How? ctokens maps each token a Row object, which contains  
-       // the token id, lemma, etc...
-       HashMap<Token, Row> ctokens = new LinkedHashMap<Token, Row>();
+            // Store the information about the sentence tokens in the ctokens map.
+            // How? ctokens maps each token a Row object, which contains  
+            // the token id, lemma, etc...
+            HashMap<Token, Row> ctokens = new LinkedHashMap<Token, Row>();
 
-       // Tokens
-       List<Token> tokens = selectCovered(Token.class, sentence);
+            // Tokens
+            List<Token> tokens = selectCovered(Token.class, sentence);
             
-       // Poss
-       List<POS> poss = selectCovered(POS.class, sentence);
+            // Poss
+            List<POS> poss = selectCovered(POS.class, sentence);
             
-       // used to convert named-entities to IOB format
-       IobEncoder encoder = new IobEncoder(aJCas.getCas(), neType, neValue);
+            // used to convert named-entities to IOB format
+            IobEncoder encoder = new IobEncoder(aJCas.getCas(), neType, neValue);
             
-       for (int i = 0; i < tokens.size(); i++) {
-           // create a new Row object and store annotations for
-           // token at position $i
+            for (int i = 0; i < tokens.size(); i++) {
+                // create a new Row object and store annotations for
+                // token at position $i
                    
-           Row row = new Row();
-           row.id = i+1;
-           row.token = tokens.get(i);
+                Row row = new Row();
+                row.id = i+1;
+                row.token = tokens.get(i);
                 
-           // Lemma
-           row.lemma = tokens.get(i).getLemma();
+                // Lemma
+                row.lemma = tokens.get(i).getLemma();
                 
-           // Named-entity chunks in IOB format
-           row.ne = encoder.encode(tokens.get(i));
-           row.pos = poss.get(i);
+                // Named-entity chunks in IOB format
+                row.ne = encoder.encode(tokens.get(i));
+                row.pos = poss.get(i);
 
-           // Add token information to the ctokens map
-           ctokens.put(row.token, row);
-       }
+                // Add token information to the ctokens map
+                ctokens.put(row.token, row);
+            }
       
-       // Write sentence in CONLL format 
-       for (Row row : ctokens.values()) {                
-           aOut.printf("%d %s %s %s %s\n", row.id, row.token.getCoveredText(), row.lemma.getValue(), row.pos.getPosValue(), row.ne);
+            // Write sentence in CONLL format 
+            for (Row row : ctokens.values()) {                
+                aOut.printf("%d %s %s %s %s\n", row.id, row.token.getCoveredText(), row.lemma.getValue(), row.pos.getPosValue(), row.ne);
+            }
+            aOut.println();
        }
-       aOut.println();
-   }
+    }
 }
 
 ```
