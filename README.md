@@ -219,24 +219,25 @@ public class NERDemo
 
 The ConllWriter writes annotations from the CAS object to a file.
 
-To do so, first, it retrieves the list of sentences from the CAS passed in input to the `convert` method.
+To do so, first, it retrieves the list of sentences from the CAS passed in input to the `convert()` method.
 
 Then, for each sentence, it stores in the `ctokens` map the information about the tokens appering in the sentence. Information about a single token is stored in a Row object.
 
 A Row object contains the following information about a token:
-1. the token position in a sentence (id)
+
+1. the token id/position in a sentence
 2. the token itself
-3. the lemma corrisponding to a token
-4. the part-of-speech tag assigned to a token
+3. the lemma corrisponding to the token
+4. the part-of-speech tag assigned to the token
 5. the named-entity category label in IOB format assigned to a token
 
-At the end, the ConllWriter write information about the tokens appearing in the sentence
+At the end, the ConllWriter writes information about the tokens appearing in the sentence to tha file.
 
-appearing in the sentence.
-
-The list of annotations is goruped by tokens and referring to each single token is saved into the map ctokens.
 
 ```java
+// ConllWriter
+
+...
 
 private void convert(JCas aJCas, PrintWriter aOut) {
 
