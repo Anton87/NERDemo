@@ -26,6 +26,7 @@ import static org.apache.uima.fit.util.JCasUtil.selectCovered;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -49,35 +50,37 @@ import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
 
 
 /**
- * <p>Writes results in the format below. The columns are separated by a single space, unlike
- * illustrated below.</p>
+ * <p>Writes results in the format below. The columns are separated by a 
+ * single space, unlike illustrated below.</p>
  * 
  * <pre><code>
- * Pierre       Pierre NNP B-person
- * Vinken       Vinken NNP I-person
- * ,            ,      ,   O
- * 61           61     CD  O
- * years        year   NNS O
- * old          old    JJ  O
- * ,            ,      ,   O
- * will         will   MD  O
- * join         join   VB  O
- * the          the    DT  O
- * board        board  NN  O
- * as           as     IN  O
- * a            a      DT  O
- * nonexecutive nonexecutive JJ  O
- * director     director     NN  O
- * Nov.         Nov.         NNP O
- * 29           29           CD  O
- * .            .            .   O
+ * 1	Pierre       Pierre NNP B-person
+ * 2	Vinken       Vinken NNP I-person
+ * 3	,            ,      ,   O
+ * 4	61           61     CD  O
+ * 5	years        year   NNS O
+ * 6	old          old    JJ  O
+ * 7	,            ,      ,   O
+ * 8	will         will   MD  O
+ * 9	join         join   VB  O
+ * 10	the          the    DT  O
+ * 11	board        board  NN  O
+ * 12	as           as     IN  O
+ * 13	a            a      DT  O
+ * 14	nonexecutive nonexecutive JJ  O
+ * 15	director     director     NN  O
+ * 16	Nov.         Nov.         NNP O
+ * 17	29           29           CD  O
+ * 18	.            .            .   O
 
  * </code></pre>
  * 
  * <ol>
- * <li>FORM - token</li>
- * <li>POS - pos</li>
- * <li>NER - named entity (BIO encoded)</li>
+ * <li>token id
+ * <li>token</li>
+ * <li>lemma</li>
+ * <li>pos</li>
+ * <li>named entity (IOB encoded)</li>
  * </ol>
  * 
  * <p>Sentences are separated by a blank new line.</p>
@@ -91,7 +94,6 @@ import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
 public class ConllWriter
     extends JCasFileWriter_ImplBase
 {
-    private static final String UNUSED = "_";
 
     /**
      * Name of configuration parameter that contains the character encoding used by the input files.
@@ -104,18 +106,19 @@ public class ConllWriter
     @ConfigurationParameter(name = PARAM_FILENAME_SUFFIX, mandatory = true, defaultValue = ".conll")
     private String filenameSuffix;
 
-    public static final String PARAM_WRITE_NAMED_ENTITY = "writeNamedEntity";
-    @ConfigurationParameter(name = PARAM_WRITE_NAMED_ENTITY, mandatory = true, defaultValue = "true")
-    private boolean writeNamedEntity;
-
     @Override
     public void process(JCas aJCas)
         throws AnalysisEngineProcessException
     {
+    	// Open a text-output stream to print the results of 
+    	// the processing to a file.
         PrintWriter out = null;
         try {
-            out = new PrintWriter(new OutputStreamWriter(getOutputStream(aJCas, filenameSuffix),
-                    encoding));
+            out = new PrintWriter(
+            		new OutputStreamWriter(
+            				getOutputStream(aJCas, filenameSuffix), encoding));
+            // convert annotations in conll format and print 
+            // them to a file.
             convert(aJCas, out);
         }
         catch (Exception e) {
@@ -131,49 +134,57 @@ public class ConllWriter
         Type neType = JCasUtil.getType(aJCas, NamedEntity.class);
         Feature neValue = neType.getFeatureByBaseName("value");
 
-        for (Sentence sentence : select(aJCas, Sentence.class)) {
+        // Sentences
+        Collection<Sentence> sentences = select(aJCas, Sentence.class);
+       
+        //For each sentence... 
+        for (Sentence sentence : sentences) {
+        	
+        	// Store the information about the sentence tokens in the ctokens map.
+        	// How? ctokens maps each token a Row object, which contains  
+        	// the token id, lemma, etc...
             HashMap<Token, Row> ctokens = new LinkedHashMap<Token, Row>();
 
             // Tokens
             List<Token> tokens = selectCovered(Token.class, sentence);
             
-            // Pos
+            // Poss
             List<POS> poss = selectCovered(POS.class, sentence);
             
-            // Chunks
+            // Convert Named-entities to IOB format
             IobEncoder encoder = new IobEncoder(aJCas.getCas(), neType, neValue);
             
             for (int i = 0; i < tokens.size(); i++) {
                 Row row = new Row();
                 row.id = i+1;
                 row.token = tokens.get(i);
+                
+                // Lemma
                 row.lemma = tokens.get(i).getLemma();
+                
+                // Named-entity chunks in IOB format
                 row.ne = encoder.encode(tokens.get(i));
                 row.pos = poss.get(i);
                 ctokens.put(row.token, row);
             }
             
             // Write sentence in CONLL 2006 format
-            for (Row row : ctokens.values()) {
-                String chunk = UNUSED;
-                if (writeNamedEntity && (row.ne != null)) {
-                    chunk = encoder.encode(row.token);
-                }
-                
-                aOut.printf("%d %s %s %s %s\n", row.id, row.token.getCoveredText(), row.lemma.getValue(), row.pos.getPosValue(), chunk);
+            for (Row row : ctokens.values()) {                
+                aOut.printf("%d %s %s %s %s\n", row.id, row.token.getCoveredText(), row.lemma.getValue(), row.pos.getPosValue(), row.ne);
             }
 
             aOut.println();
         }
     }
 
+    
     private static final class Row
     {
-        int id;
+    	int id; 			
         Token token;
-        String ne;
-        // inserted by me
-        POS pos;
-        Lemma lemma;
+        /** Named-entity category label: B-Person, I-Person, O, etc... */
+        String ne;	
+        POS pos;		
+        Lemma lemma;	
     }
 }
