@@ -75,14 +75,6 @@ import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
 
  * </code></pre>
  * 
- * <ol>
- * <li>token id
- * <li>token</li>
- * <li>lemma</li>
- * <li>pos</li>
- * <li>named entity (IOB encoded)</li>
- * </ol>
- * 
  * <p>Sentences are separated by a blank new line.</p>
  * 
  * @see <a href="http://www.clips.ua.ac.be/conll2002/ner/">CoNLL 2002 shared task</a>
@@ -165,6 +157,8 @@ public class ConllWriter
                 // Named-entity chunks in IOB format
                 row.ne = encoder.encode(tokens.get(i));
                 row.pos = poss.get(i);
+                
+                // Add token information to the ctokens map
                 ctokens.put(row.token, row);
             }
             
