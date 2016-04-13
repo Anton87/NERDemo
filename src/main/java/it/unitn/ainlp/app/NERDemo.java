@@ -54,7 +54,7 @@ public class NERDemo
     			/*
     			 * Read text from file passed in input 
     			 */
-    		    createReaderDescription(TextReader.class,
+                createReaderDescription(TextReader.class,
                     TextReader.PARAM_SOURCE_LOCATION, inputFile, 
     	            TextReader.PARAM_LANGUAGE, "en"),
     					
@@ -72,7 +72,7 @@ public class NERDemo
     	        /*
     	         * Perform part-of-speech tagging using OpenNLP.
     	         */
-    		    createEngineDescription(OpenNlpPosTagger.class),
+                createEngineDescription(OpenNlpPosTagger.class),
     	        
                 /*
                  * Perform named entity recognition using OpenNLP.
