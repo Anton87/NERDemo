@@ -4,9 +4,9 @@ This is a simple demo showing how to perform simple IR tasks such as Named Entit
 
 ## Prerequisites
 
-### JDK
+### JDK 7+
 
-Download and install the Java SE Development Kit 7 from the Oracle Java Site
+Download and install the Java SE Development Kit 7 from the Oracle Java Site.
 
 ### UIMA
 
@@ -91,8 +91,14 @@ $> ./NERDemo.sh data/document.txt output
 
 The app performs sentence boundary detection, lemmatization, part-of-speech (pos) tagging and 
 recognition of entities appearing within the text.
-The result of the processing are written in CoNLL format in the file *output/document.txt.conll* and 
-could look something like this:
+The result of the processing are written` in CoNLL format in the file *output/document.txt.conll*.
+
+To check the result, type:
+```
+$> less output/document.txt.conll
+```
+ 
+The ouptut file should look something like this:
 
 ```
 1       Pierre       Pierre       NNP B-person
