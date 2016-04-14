@@ -283,7 +283,7 @@ public class ConllWriter extends JCasFileWriter_ImplBase {
 
 ## Homeworks
 
-### Homework 1 
+### Homework 1: Print token boundaries
 
 Modify the code in `ConllWriter.java` source file so that the token boundaries are printed to the output file.
 
@@ -313,6 +313,9 @@ The output file should look something like this:
 
 ```
 
+### Homework 2: Print chunks
+
+Modify the code in the `ChunkerDemo.java` and `ChunkerConllWriter.java` source files to print the chunk annotations to the output file.
 
  
 
