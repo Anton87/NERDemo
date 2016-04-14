@@ -287,7 +287,7 @@ public class ConllWriter extends JCasFileWriter_ImplBase {
 
 Modify the code in `ConllWriter.java` source file so that the token boundaries are printed to the output file.
 
-**Hint:** Look at the method `[getBegin()](https://uima.apache.org/downloads/releaseDocs/2.3.0-incubating/docs/api/org/apache/uima/jcas/tcas/Annotation.html#getBegin%28%29)` and `[getEnd()](https://uima.apache.org/downloads/releaseDocs/2.3.0-incubating/docs/api/org/apache/uima/jcas/tcas/Annotation.html#getEnd%28%29)` of the [Annotation](https://uima.apache.org/downloads/releaseDocs/2.3.0-incubating/docs/api/org/apache/uima/jcas/tcas/Annotation.html) class to get the token boundaries.
+**Hint:** Look at the method [getBegin()](https://uima.apache.org/downloads/releaseDocs/2.3.0-incubating/docs/api/org/apache/uima/jcas/tcas/Annotation.html#getBegin%28%29) and [getEnd()](https://uima.apache.org/downloads/releaseDocs/2.3.0-incubating/docs/api/org/apache/uima/jcas/tcas/Annotation.html#getEnd%28%29) of the [Annotation](https://uima.apache.org/downloads/releaseDocs/2.3.0-incubating/docs/api/org/apache/uima/jcas/tcas/Annotation.html) class to get the token boundaries.
 
 The output file should look something like this:
 
