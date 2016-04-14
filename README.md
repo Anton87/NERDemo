@@ -287,7 +287,7 @@ public class ConllWriter extends JCasFileWriter_ImplBase {
 
 Modify the code in `ConllWriter.java` source file so that the token boundaries are printed to the output file.
 
-**Hint:** Look at the method `getBegin()` and `getEnd()` of the [Token](https://dkpro.github.io/dkpro-core/releases/1.7.0/apidocs/de/tudarmstadt/ukp/dkpro/core/api/segmentation/type/Token.html) class to get the token boundaries.
+**Hint:** Look at the method `[getBegin()](https://uima.apache.org/downloads/releaseDocs/2.3.0-incubating/docs/api/org/apache/uima/jcas/tcas/Annotation.html#getBegin%28%29)` and `[getEnd()](https://uima.apache.org/downloads/releaseDocs/2.3.0-incubating/docs/api/org/apache/uima/jcas/tcas/Annotation.html#getEnd%28%29)` of the [Annotation](https://uima.apache.org/downloads/releaseDocs/2.3.0-incubating/docs/api/org/apache/uima/jcas/tcas/Annotation.html) class to get the token boundaries.
 
 The output file should look something like this:
 
@@ -305,7 +305,7 @@ The output file should look something like this:
 11      board        board        NN  O        43 48
 12      as           as           IN  O        49 51
 13      a            a            DT  O        52 53
-14      nonexecutive nonexecutive JJ  O        54 56
+14      nonexecutive nonexecutive JJ  O        54 66
 15      director     director     NN  O        67 75
 16      Nov.         Nov.         NNP O        76 80
 17      29           29           CD  O        81 83
