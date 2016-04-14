@@ -283,7 +283,11 @@ public class ConllWriter extends JCasFileWriter_ImplBase {
 
 ## Homeworks
 
-Modify the `ConllWriter.java` source file so that it also print the token boundaries.
+### Homework 1 
+
+Modify the code in `ConllWriter.java` source file so that the token boundaries are printed to the output file.
+
+*Hint:* Look at the method `getBegin()` and `getEnd()` of the `(Token)[https://dkpro.github.io/dkpro-core/releases/1.7.0/apidocs/de/tudarmstadt/ukp/dkpro/core/api/segmentation/type/Token.html] class to get the token boundaries.
 
 The output file should look something like this:
 
