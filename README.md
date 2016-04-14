@@ -1,6 +1,6 @@
 # NERDemo
 
-This is a simple demo showing how to perform many NLP tasks such as text segmentation, part-of-speech tagging, lemmatization and named entity recognition (NER) by using UIMA and DKPro.
+This is a simple demo showing how to perform many NLP tasks such as text segmentation, part-of-speech (pos) tagging, lemmatization and named entity recognition (NER) by using UIMA and DKPro.
 
 ## Prerequisites
 
@@ -69,7 +69,7 @@ $> ./NERDemo.sh <src file> <dest dir>
 
 Look into the NERDemo.sh script ot figure out what is happening.
 
-The first time you lunch the app, it will take time since it is downloading JARs and model files.
+The first time you run the app, it will take time since it is downloading JARs and model files.
 
 ## The NERDemo app
 
@@ -280,14 +280,43 @@ public class ConllWriter extends JCasFileWriter_ImplBase {
 }
 
 ```
+
+## Homeworks
+
+Modify the `ConllWriter.java` source file so that it also print the token boundaries.
+
+The output file should look something like this:
+
+```
+1       Pierre       Pierre       NNP B-person  0  6 
+2       Vinken       Vinken       NNP I-person  7 13
+3       ,            ,            ,   O        13 14
+4       61           61           CD  O        15 17
+5       years        year         NNS O        18 23
+6       old          old          JJ  O        24 27
+7       ,            ,            ,   O        27 28
+8       will         will         MD  O        29 33
+9       join         join         VB  O        34 38 
+10      the          the          DT  O        39 42
+11      board        board        NN  O        43 48
+12      as           as           IN  O        49 51
+13      a            a            DT  O        52 53
+14      nonexecutive nonexecutive JJ  O        54 56
+15      director     director     NN  O        67 75
+16      Nov.         Nov.         NNP O        76 80
+17      29           29           CD  O        81 83
+18      .            .            .   O        83 84
+
+```
+
+
  
 
 ## Importing the project into Eclipse
 
 ### Maven
 
-If you use Eclipse please install the M2E plugin. Go to Help > Install new software... and search
-for m2e.  
+If you use Eclipse please install the M2E plugin. Go to Help > Install new software... and search for m2e.  
 
 
 ### Importing the project into Eclipse
