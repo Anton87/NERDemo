@@ -89,7 +89,7 @@ To lunch the app, type:
 $> ./NERDemo.sh data/document.txt output
 ```
 
-The app performs sentence boundary detection, lemmatization, part-of-speech (pos) tagging and 
+The app performs sentence boundary detection, lemmatization, pos tagging and 
 recognition of entities appearing within the text.
 The result of the processing are written` in CONLL format in the file *output/document.txt.conll*.
 
