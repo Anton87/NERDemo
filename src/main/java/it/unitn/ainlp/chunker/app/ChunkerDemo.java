@@ -93,7 +93,9 @@ public class ChunkerDemo
                 		OpenNlpNameFinder.PARAM_VARIANT, "location"),
                 		
                 /**
-                 * Add here the code to include the OpenNlpChunker annotator.
+                 * Your code goes here!
+                 * 
+                 * Hint: Add the code to include the OpenNlpChunker annotator.
                  * 
                  * createEngineDescription(...),
                  */
@@ -101,7 +103,7 @@ public class ChunkerDemo
                 /*
                  * Write the result to disk in CoNLL format. The results are
                  * written to the directory stored in the outputDir param
-                */
+                 */
                 createEngineDescription(ChunkerConllWriter.class,
                 		ChunkerConllWriter.PARAM_TARGET_LOCATION, outputDir));
     }

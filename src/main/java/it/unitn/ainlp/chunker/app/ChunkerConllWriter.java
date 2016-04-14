@@ -128,13 +128,10 @@ public class ChunkerConllWriter
         Type neType = JCasUtil.getType(aJCas, NamedEntity.class);
         Feature neValue = neType.getFeatureByBaseName("value");
 
-        /**
-         * Add here the code to extract the chunk feature value.
-         * 
-         * Type chunkType = JCasUtil.getType(aJCas, ...);
-         * Feature chunkValue = chunkType.getFeatureByBaseName("chunkValue");
-         */
-
+        // needed by the chunk IOB encoder
+        Type chunkType = JCasUtil.getType(aJCas, Chunk.class);
+        Feature chunkValue = chunkType.getFeatureByBaseName("chunkValue");
+         
         // Sentences
         Collection<Sentence> sentences = select(aJCas, Sentence.class);
        
@@ -153,14 +150,20 @@ public class ChunkerConllWriter
             List<POS> poss = selectCovered(POS.class, sentence);
             
             // Convert Named-entities to IOB format
-            IobEncoder neEncoder = new IobEncoder(aJCas.getCas(), neType, neValue);
-            
+            IobEncoder neEncoder = new IobEncoder(aJCas.getCas(), neType, neValue);        
+    
             /**
-             * Add here the code to convert chunk to the IOB format.
+             * Your code goes here!
              * 
-             * // Convert chunks in IO format
+             * Hint: Add the code to instantiate the IOBEncoder for chunks.
+             *       The IOB encoder converts chunk annotations to the IOB format.
+             *       This step is required as chunks may span several tokens.
+             *       By using the IOB encoder, you have one annotation for each token.
+             * 
+             * // Convert chunks to IOB format
              * IobEncoder chunkEncoder = new IobEncoder(aJCas.getCas(), ..., ...);
-             */             
+             * 
+             */
             for (int i = 0; i < tokens.size(); i++) {
                 Row row = new Row();
                 row.id = i+1;
@@ -174,9 +177,12 @@ public class ChunkerConllWriter
                 row.pos = poss.get(i);
                 
                 /**
-                 * Add the code for storing the chunk information
-                 * inside the row.
+                 * Your code goes here!
                  * 
+                 * Hint: Add the code for storing the chunks in IOB format
+                 *       inside the Row object.
+                 * 
+                 * // chunks in IOB format
                  * row.chunk = ...;
                  */
                 
@@ -187,7 +193,10 @@ public class ChunkerConllWriter
             // Write sentence in CONLL format
             for (Row row : ctokens.values()) {
             	/**
-            	 * Add the code for printing chunks.
+            	 * 
+            	 * You code goes here!
+            	 * 
+            	 * Hint: Add the code for printing chunks.
             	 *  
             	 * aOut.printf("%d %s %s %s %s %s\n", row.id, row.token.getCoveredText(), row.lemma.getValue(), row.pos.getPosValue(), row.ne, ...);
             	 */

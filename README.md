@@ -313,9 +313,48 @@ The output file should look something like this:
 
 ```
 
-### Homework 2: Print chunks
+### Homework 2: Print chunk annotations
 
 Modify the code in the `ChunkerDemo.java` and `ChunkerConllWriter.java` source files to print the chunk annotations to the output file.
+
+**Hint:** we marked with `/** Your code goes here! */` the part of code you need to modify.
+You have to replace the ellipsis `...` with the right code.
+
+After that, compile and package the project into a JAR:
+
+```
+$> mvn compile package
+```
+
+Then, run the project:
+
+```
+$> ./ChunkerDemo.sh data/document.txt output
+```
+
+The output file should look something like this:
+
+```
+1	Pierre       Pierre       NNP B-person B-NP
+2	Vinken       Vinken       NNP I-person I-NP
+3	,            ,            ,   O        O
+4	61           61           CD  O        B-NP
+5	years        year         NNS O        I-NP
+6	old          old          JJ  O        B-ADJP
+7	,            ,            ,   O        O
+8	will         will         MD  O        B-VP
+9	join         join         VB  O        I-VP
+10	the          the          DT  O        B-NP
+11	board        board        NN  O        I-NP
+12	as           as           IN  O        B-PP
+13	a            a            DT  O        B-NP
+14	nonexecutive nonexecutive JJ  O        I-NP
+15	director     director     NN  O        I-NP
+16	Nov.         Nov.         NNP O        B-NP
+17	29           29           CD  O        I-NP
+18	.            .            .   O        O
+```
+
 
  
 
