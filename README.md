@@ -1,6 +1,6 @@
 # NERDemo
 
-This is a simple demo showing how to perform simple IR tasks such as Named Entity Recognition by using UIMA and DKPro.
+This is a simple demo showing how to perform many NLP tasks such as text segmentation, part-of-speech tagging, lemmatization and named entity recognition (NER) by using UIMA and DKPro.
 
 ## Prerequisites
 
