@@ -5,6 +5,9 @@ import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDe
 import static org.apache.uima.fit.util.JCasUtil.select;
 import static org.apache.uima.fit.util.JCasUtil.selectCovered;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.cli.*;
 import org.apache.uima.fit.pipeline.JCasIterable;
 import org.apache.uima.jcas.JCas;
@@ -12,6 +15,9 @@ import org.apache.uima.jcas.JCas;
 import de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
+import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.PennTree;
+import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.constituent.Constituent;
+import de.tudarmstadt.ukp.dkpro.core.berkeleyparser.BerkeleyParser;
 import de.tudarmstadt.ukp.dkpro.core.io.text.TextReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import de.tudarmstadt.ukp.dkpro.core.languagetool.LanguageToolLemmatizer;
@@ -20,12 +26,22 @@ import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpSegmenter;
 
 /**
- * A simple demo showing how to perform simple information extraction (IE)
- * tasks, such as Named Entity Recognition (NER), by using the UIMA SDK and 
- * DKPro.
- * It also shows how to access the analysis results produced by DKPro Core.
+ * A simple application that reads text from the specified document and 
+ * print tokens, POSs, lemmas and named entities, followed by the
+ * constituent trees as a bracketed structure.
+ * 
+ * The application performs the following tasks:
+ * <ol>
+ * <li> text segmentation
+ * <li> tokenization 
+ * <li> part-of-speech tagging
+ * <li> named entity recognition
+ * <li> constituency parsing
+ * </ol> 
+ * 
+ * It also shows how to access the analysis results produced by DKPro.
  */
-public class NERDemoXmiCas 
+public class NLPDemoXmiCas 
 {
     public static void main( String[] args ) throws Exception {
     	
@@ -91,6 +107,12 @@ public class NERDemoXmiCas
                         OpenNlpNameFinder.PARAM_VARIANT, "organization"),
                 createEngineDescription(OpenNlpNameFinder.class, 
                 		OpenNlpNameFinder.PARAM_VARIANT, "location"),
+                	
+                /*
+                 * Perform constituency parsing using Berkeley Parser.
+                 */
+                createEngineDescription(BerkeleyParser.class,
+                		BerkeleyParser.PARAM_WRITE_PENN_TREE, true),
     	        
                 /*
                  * Write output in XMI format
@@ -117,7 +139,11 @@ public class NERDemoXmiCas
                 System.out.printf("  %-16s %-10s%n", "ENTITY", "TOKENS");
                 for (NamedEntity ne : selectCovered(NamedEntity.class, sentence)) {
                     System.out.printf("  %-16s %-10s%n", ne.getValue(), ne.getCoveredText());
-                }
+                }                
+                
+                System.out.printf("%n -- PennTree --%n");
+                List<PennTree> trees = new ArrayList<PennTree>(selectCovered(PennTree.class, sentence));
+                System.out.printf("  %s%n", trees.get(0).getPennTree());
             }
         }
     }
