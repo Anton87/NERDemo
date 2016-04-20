@@ -8,7 +8,10 @@ import static org.apache.uima.fit.util.JCasUtil.selectCovered;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.BasicParser;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
 import org.apache.uima.fit.pipeline.JCasIterable;
 import org.apache.uima.jcas.JCas;
 
@@ -16,7 +19,6 @@ import de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.PennTree;
-import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.constituent.Constituent;
 import de.tudarmstadt.ukp.dkpro.core.berkeleyparser.BerkeleyParser;
 import de.tudarmstadt.ukp.dkpro.core.io.text.TextReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
@@ -63,7 +65,7 @@ public class NLPDemoXmiCas
     	if (args.length != 2 || cl.hasOption('h')) {
     		// print the help
     		HelpFormatter f = new HelpFormatter();
-    		f.printHelp("NERDemoXmiCas [option] text_file destDir", opt);
+    		f.printHelp("NLPDemoXmiCas [option] text_file destDir", opt);
     		return;    		
     	}
     	
@@ -73,7 +75,13 @@ public class NLPDemoXmiCas
     	// get output directory
     	String outputDir = args[1];  
     	    	
-    	// Assemble pipeline
+    	// Assemble pipeline:
+    	// JCasIterable implements iteration over the documents of
+    	// a collection.
+    	// Each element in the iterable is a JCas containing a single document.
+    	// The documents are read  by the TextReader and processed by the 
+    	// Analysis engines.
+    	
     	JCasIterable pipeline = new JCasIterable(
     			/*
     			 * Read text from file passed in input 
@@ -141,7 +149,7 @@ public class NLPDemoXmiCas
                     System.out.printf("  %-16s %-10s%n", ne.getValue(), ne.getCoveredText());
                 }                
                 
-                System.out.printf("%n -- PennTree --%n");
+                System.out.printf("%n  -- PennTree --%n");
                 List<PennTree> trees = new ArrayList<PennTree>(selectCovered(PennTree.class, sentence));
                 System.out.printf("  %s%n", trees.get(0).getPennTree());
             }
