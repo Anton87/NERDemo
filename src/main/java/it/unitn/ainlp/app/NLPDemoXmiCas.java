@@ -79,12 +79,14 @@ public class NLPDemoXmiCas
     	// get output directory
     	String outputDir = args[1];  
     	    	
-    	// Assemble pipeline:
+    	// Assemble the pipeline by creating a new JCasIterable object.
     	// JCasIterable implements iteration over the documents of
     	// a collection.
     	// Each element in the iterable is a JCas containing a single document.
     	// The documents are read  by the TextReader and processed by the 
-    	// Analysis engines.    	
+    	// Analysis engines (e.g. OpenNlpSegmenter, LanguageToolLemmatizer, etc...).
+    	// In this case the iterable contains only a single JCas
+    	// corresponding to the document passed in input.
     	JCasIterable pipeline = new JCasIterable(
     			
     			/*
