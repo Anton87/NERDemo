@@ -29,7 +29,7 @@ import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpSegmenter;
 
 /**
- * A simple application that reads text from the specified document and 
+ * A simple application that reads text from a text file and 
  * print tokens, POSs, lemmas and named entities, followed by the
  * constituent trees as a bracketed structure.
  * 
