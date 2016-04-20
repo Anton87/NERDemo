@@ -5,6 +5,7 @@ import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDe
 import static org.apache.uima.fit.util.JCasUtil.select;
 import static org.apache.uima.fit.util.JCasUtil.selectCovered;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,11 +35,14 @@ import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpSegmenter;
  * 
  * The application performs the following tasks:
  * <ol>
- * <li> text segmentation
- * <li> tokenization 
- * <li> part-of-speech tagging
- * <li> named entity recognition
- * <li> constituency parsing
+ * <li>text segmentation</li>
+ *   <ol>
+ *     <li>sentence splitting</li>
+ *     <li>tokenization</li>
+ *   </ol>
+ * <li>part-of-speech tagging</li>
+ * <li>named entity recognition</li>
+ * <li>constituency parsing</li>
  * </ol> 
  * 
  * It also shows how to access the analysis results produced by DKPro.
@@ -80,15 +84,24 @@ public class NLPDemoXmiCas
     	// a collection.
     	// Each element in the iterable is a JCas containing a single document.
     	// The documents are read  by the TextReader and processed by the 
-    	// Analysis engines.
-    	
+    	// Analysis engines.    	
     	JCasIterable pipeline = new JCasIterable(
+    			
     			/*
-    			 * Read text from file passed in input 
+    			 * Read text from the file passed in input. 
     			 */
     			createReaderDescription(TextReader.class,
     					TextReader.PARAM_SOURCE_LOCATION, inputFile, 
     					TextReader.PARAM_LANGUAGE, "en"),
+    					
+    			/**
+    			 *	// Read text from a list of files.
+    			 * 
+    			 *  createReaderDescription(TextReader.class,
+    			 *		TextReader.PARAM_SOURCE_LOCATION, "data",
+    			 *		TextReader.PARAM_PATTERNS, new String[]{ "*.txt" }, 
+    			 *		TextReader.PARAM_LANGUAGE, "en"),
+    			 */
     					
     			/* 
     			 * Perform tokenization and sentence boundary detection 
@@ -123,11 +136,11 @@ public class NLPDemoXmiCas
                 		BerkeleyParser.PARAM_WRITE_PENN_TREE, true),
     	        
                 /*
-                 * Write output in XMI format
+                 * Write output in XMI format for inspection in 
+                 * UIMA CAS Visual Debugger.
                  */
                 createEngineDescription(XmiWriter.class,
-                		XmiWriter.PARAM_TARGET_LOCATION, outputDir,
-                		XmiWriter.PARAM_TYPE_SYSTEM_FILE, "TypeSystem.xml"));
+                		XmiWriter.PARAM_TARGET_LOCATION, outputDir));
     	
     	// Run and show results in console
         for (JCas jcas : pipeline) {
@@ -135,6 +148,8 @@ public class NLPDemoXmiCas
                 System.out.printf("%n== Sentence ==%n");
                 System.out.printf("  %-16s %-10s %-10s %-10s %n", "TOKEN", "LEMMA", 
                 		"CPOS", "POS");
+                
+                // Print tokens, lemmas, chunk POSs ad POSs
                 for (Token token : selectCovered(Token.class, sentence)) {
                     System.out.printf("  %-16s %-10s %-10s %-10s %n",
                             token.getCoveredText(),
@@ -142,16 +157,18 @@ public class NLPDemoXmiCas
                             token.getPos().getClass().getSimpleName(),
                             token.getPos().getPosValue());
                 }
-
+                	
+                // Print named entities 
                 System.out.printf("%n  -- Named Entities --%n");
                 System.out.printf("  %-16s %-10s%n", "ENTITY", "TOKENS");
                 for (NamedEntity ne : selectCovered(NamedEntity.class, sentence)) {
                     System.out.printf("  %-16s %-10s%n", ne.getValue(), ne.getCoveredText());
                 }                
-                
+               
+                // Print constituency-based parse trees in Penn format
                 System.out.printf("%n  -- PennTree --%n");
                 List<PennTree> trees = new ArrayList<PennTree>(selectCovered(PennTree.class, sentence));
-                System.out.printf("  %s%n", trees.get(0).getPennTree());
+                System.out.printf("  %s%n%n", trees.get(0).getPennTree());
             }
         }
     }

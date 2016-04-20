@@ -2,7 +2,7 @@
 # Try change the CLASSPATH separator symbol from colon ":" to semicolon ";"
 # on Windows.
 export CLASSPATH="."
-export CLASSPATH=${CLASSPATH}:"target/NLPDemo-0.0.1-SNAPSHOT.jar"
+export CLASSPATH=${CLASSPATH}:"target/NERDemo-0.0.1-SNAPSHOT.jar"
 export CLASSPATH=${CLASSPATH}:"target/dependency/*"
 
 # run the NERDemo app
