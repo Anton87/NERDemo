@@ -89,32 +89,32 @@ public class NLPDemoXmiCas
     	// corresponding to the document passed in input.
     	JCasIterable pipeline = new JCasIterable(
     			
-    			/*
-    			 * Read text from the file passed in input. 
-    			 */
-    			createReaderDescription(TextReader.class,
-    					TextReader.PARAM_SOURCE_LOCATION, inputFile, 
-    					TextReader.PARAM_LANGUAGE, "en"),
+				/*
+				 * Read text from the file passed in input. 
+				 */
+				createReaderDescription(TextReader.class,
+						TextReader.PARAM_SOURCE_LOCATION, inputFile, 
+						TextReader.PARAM_LANGUAGE, "en"),
     					
-    			/**
-    			 *	// Read text from a list of files.
-    			 * 
-    			 *  createReaderDescription(TextReader.class,
-    			 *		TextReader.PARAM_SOURCE_LOCATION, "data",
-    			 *		TextReader.PARAM_PATTERNS, new String[]{ "*.txt" }, 
-    			 *		TextReader.PARAM_LANGUAGE, "en"),
-    			 */
+				/**
+				 *	// Read text from a list of files.
+				 * 
+				 *  createReaderDescription(TextReader.class,
+				 *		TextReader.PARAM_SOURCE_LOCATION, "data",
+				 *		TextReader.PARAM_PATTERNS, new String[]{ "*.txt" }, 
+				 *		TextReader.PARAM_LANGUAGE, "en"),
+				 */
     					
-    			/* 
-    			 * Perform tokenization and sentence boundary detection 
-    			 * using OpenNLP. 
-    			 */
-    			createEngineDescription(OpenNlpSegmenter.class),
+				/* 
+				 * Perform tokenization and sentence boundary detection 
+				 * using OpenNLP. 
+				 */
+				createEngineDescription(OpenNlpSegmenter.class),
     			
-    			/*
-    			 * Perform lemmatization using !LanguageTool. 
-    			 */
-    	        createEngineDescription(LanguageToolLemmatizer.class),
+				/*
+				 * Perform lemmatization using !LanguageTool. 
+				 */
+    			createEngineDescription(LanguageToolLemmatizer.class),
     	        
     	        /*
     	         * Perform part-of-speech tagging using OpenNLP.
