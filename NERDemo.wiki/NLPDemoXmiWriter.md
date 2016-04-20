@@ -79,10 +79,51 @@ The first time you run the app, it will take time since it is downloading JARs a
 
 The NLPDemoXmiCas app takes in input two parameters:
  - srcFile -- the path of a file containing many text in English language;
- - destDir -- the name of the output directory where to save the xmi cas
+ - destDir -- the name of the directory where to save the output in [xmi](https://en.wikipedia.org/wiki/XML_Metadata_Interchange) format.
 
+The data folder contains a file, *data/document.txt*, which contains the following text:
+```
+Pierre Vinken, 61 years old, will join the board as a nonexecutive director Nov. 29.
+...
 
+```
 
+To lunch the app, type:
+```
+$> ./NERDemoXmiCas.sh data/document.txt outputXmi
+```
 
+The app performs:
+
+1. text segmentation
+ * 1.1 sentence splitting
+ * 1.2 tokenization
+2. lemmatization
+3. pos tagging
+4. named entity recognition
+5. constituency-based parsing
+
+The result of the processing are written in xmi format in the file *outputXmi/document.txt.xmi*.
+
+In addition, the application outputs the processing results to the console. The output shold look somthing like this
+
+```
+```
+
+### Show results in the UIMA CAS Visual Debugger
+
+To show the results in the UIMA CAS Visual Debugger, type:
+
+```
+java -cp ${UIMA_HOME}/lib/uima-core.jar:${UIMA_HOME}/lib/uima-tools.jar org.apache.uima.tools.cvd.CVD
+```
+
+* Click on File -> Read Type System File
+  * Select the file *outputXmi/typesystem.xml* in the project dir
+* Click on File -> Read Xmi CAS File
+  * Select the file *outputXmi/document.txt.xmi* in the project dir
+
+Then, form the top left window *Analysis Results*
+ * Click with the right button on AnnotationIndex > uima.tcas.Annotation > de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity and select *Show annotations: de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity*
 
 
